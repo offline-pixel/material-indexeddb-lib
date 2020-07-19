@@ -1,0 +1,85 @@
+<div class="row col-md-12 p-0 m-0">
+    <p class="col-md-12 p-0" color="primary">Add Locations</p>
+    <mat-form-field class="col-md-12 p-0">
+        <mat-label>Location Name</mat-label>
+        <input matInput [(ngModel)]="location.locationname">
+    </mat-form-field>
+    <br />
+    <mat-form-field class="col-md-6 pl-0">
+        <mat-label>Address Line 1</mat-label>
+        <input matInput [(ngModel)]="location.addressmain">
+    </mat-form-field>
+    <mat-form-field class="col-md-6 pr-0">
+        <mat-label>Suite No.</mat-label>
+        <input matInput [(ngModel)]="location.suitenumber">
+    </mat-form-field>
+    <br />
+    <mat-form-field class="col-md-6 pl-0">
+        <mat-label>Address Line 2</mat-label>
+        <input matInput [(ngModel)]="location.addresslandmark">
+    </mat-form-field>
+    <div class="col-md-6 p-0">
+        <mat-form-field class="col-md-6">
+            <mat-label>City</mat-label>
+            <input matInput [(ngModel)]="location.city">
+        </mat-form-field>
+        <mat-form-field class="col-md-6 pr-0">
+            <mat-label>State</mat-label>
+            <mat-select *ngIf="states$ | async as states" [(ngModel)]="location.state">
+                <mat-option *ngFor="let data of states.body" [value]="data.name">{{data.name}}</mat-option>
+            </mat-select>
+        </mat-form-field>
+    </div>
+    <br />
+    <div class="col-md-6 p-0">
+        <mat-form-field class="col-md-6 pl-0">
+            <mat-label>Zip code</mat-label>
+            <input matInput [(ngModel)]="location.zipcode" [formControl]="zip" required >
+            <mat-error *ngIf="zip.invalid">{{zipErrorMessage()}}</mat-error>
+        </mat-form-field>
+        <mat-form-field class="col-md-6">
+            <mat-label>Phone Number</mat-label>
+            <input type="tel" matInput [(ngModel)]="location.mobilenumber" [formControl]="usmobile" required >
+            <mat-error *ngIf="usmobile.invalid">{{usMobileErrorMessage()}}</mat-error>
+        </mat-form-field>
+    </div>
+    <mat-form-field class="col-md-6 pr-0">
+        <mat-label>Time Zone</mat-label>
+        <mat-select *ngIf="timezones$ | async as timezones" [(ngModel)]="location.timezone">
+            <mat-option *ngFor="let data of timezones.body" [value]="data.text">{{data.text}}</mat-option>
+        </mat-select>
+    </mat-form-field>
+    <br />
+    <mat-form-field class="col-md-6 pl-0">
+        <mat-label>Facility Times</mat-label>
+        <input matInput [(ngModel)]="location.facilities" (click)="facilityTiming($event)">
+    </mat-form-field>
+    <mat-form-field class="example-chip-list col-md-6 pr-0">
+        <mat-chip-list #chipList aria-label="Pool selection">
+          <mat-chip
+            *ngFor="let pool of pools"
+            [selectable]="selectable" [removable]="removable"
+            (removed)="remove(pool)">
+            {{pool}}
+            <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
+          </mat-chip>
+          <input
+            placeholder="Appointment pool"
+            #poolInput
+            [formControl]="poolCtrl"
+            [matAutocomplete]="auto" [matChipInputFor]="chipList"
+            [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+            (matChipInputTokenEnd)="add($event)">
+        </mat-chip-list>
+        <mat-autocomplete #auto="matAutocomplete" (optionSelected)="selected($event)">
+          <mat-option *ngFor="let pool of filteredPools | async" [value]="pool">
+            {{pool}}
+          </mat-option>
+        </mat-autocomplete>
+    </mat-form-field>
+    <br />
+    <div class="col-md-12 text-right p-0">
+        <button mat-flat-button class="m-1" (click)="closeDialog()" color="warn">Cancel</button>
+        <button mat-flat-button class="m-1" (click)="addLocation()" style="margin-right: 0 !important;" color="primary">Save</button>
+    </div>
+</div>

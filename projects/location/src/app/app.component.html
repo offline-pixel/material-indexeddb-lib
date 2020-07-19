@@ -1,0 +1,12 @@
+<div class="row col-md-12 p-3">
+    <h3 class="col-md-6 pt-2 ">Locations</h3>
+    <div class="col-md-6 pt-2 pr-0 text-right">
+        <button mat-flat-button color="primary" (click)="modalPopup($event)">+ Add Location</button>
+    </div>
+</div>
+<div class="row col-md-12 noData" *ngIf="!data">
+    <img src="../assets/img/blank.png" />
+</div>
+<div class="" *ngIf="data">
+    <loc-mat-table [data]="data"></loc-mat-table>
+</div>
