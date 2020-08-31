@@ -1,26 +1,10 @@
 import { Injectable } from '@angular/core';
-import { Observable, of } from 'rxjs';
-import { callbackify } from 'util';
 
 @Injectable({
   providedIn: 'root'
 })
 export class IndexeddbService {
-  locationData: any = [
-    // {
-    //   mobilenumber: '',
-    //   locationname: '',
-    //   addressmain: '',
-    //   suitenumber: '',
-    //   addresslandmark: '',
-    //   zipcode: '',
-    //   city: '',
-    //   state: '',
-    //   timezone: '',
-    //   facilitytimes: '',
-    //   pools: ''
-    // }
-  ];
+  locationData: any = [ ];
   constructor() { }
 
   createOrRetreive(): any {

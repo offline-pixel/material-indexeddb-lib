@@ -6,7 +6,6 @@ import { MatSort } from '@angular/material/sort';
 
 import { DialogComponent } from '../dialog/dialog.component';
 import { DeleteComponent } from '../delete/delete.component';
-import { IndexeddbService } from '../functions/indexeddb.service';
 
 export interface PeriodicElement { }
 
@@ -25,8 +24,7 @@ export class MatTableComponent implements OnInit, OnChanges {
   @ViewChild(MatSort, { static: true }) sort: MatSort;
 
   constructor(
-    private _pop: MatDialog,
-    private _idb: IndexeddbService
+    private _pop: MatDialog
      ) { }
 
   ngOnInit(): void {

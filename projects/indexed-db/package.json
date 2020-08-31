@@ -1,0 +1,33 @@
+{
+  "name": "idb-lib",
+  "version": "0.0.5",
+  "description":
+    "It is one of the lightweight and fastest npm without any dependencies. A developer can use it for implementing CRUD operations with indexedDb. It is not only fast and lightweight, It is easiest NPM to implement in angular projects."
+  ,
+  "author": "Deepak Ranolia",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/offline-pixel/idb-lib"
+  },
+  "bugs":{
+    "url": "https://github.com/offline-pixel/idb-lib"
+  },
+  "homepage": "https://github.com/offline-pixel/idb-lib",
+  "publishConfig": { "registry": "https://npm.pkg.github.com/" },
+  "keywords": [
+    "indexed",
+    "db",
+    "indexeddb",
+    "storage",
+    "angular",
+    "idb npm",
+    "crud"
+  ],
+  "peerDependencies": {
+    "@angular/common": "^9.1.12",
+    "@angular/core": "^9.1.12"
+  },
+  "devDependencies": {
+    "tslib": "^1.10.0"
+  }
+}

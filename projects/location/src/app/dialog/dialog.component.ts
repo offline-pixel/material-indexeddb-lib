@@ -8,7 +8,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { FormControl, Validators } from '@angular/forms';
 import { map, startWith } from 'rxjs/operators';
 import { Observable } from 'rxjs';
-import { IndexeddbService } from '../functions/indexeddb.service';
+import { IndexedDbService } from 'indexed-db';
 import { SchedularComponent } from '../schedular/schedular.component';
 
 export class States {
@@ -54,6 +54,12 @@ export class DialogComponent {
 
   mode: any = 'add';
   deepCopy: any;
+  res = {
+    name: 'dbName',
+    store: 'subDbName',
+    key: null,
+    data: null
+  };
   @ViewChild('poolInput') poolInput: ElementRef<HTMLInputElement>;
   @ViewChild('auto') matAutocomplete: MatAutocomplete;
 
@@ -62,7 +68,7 @@ export class DialogComponent {
     private _dialog: DialogService,
     public dialogRef: MatDialogRef<DialogComponent>,
     @Inject(MAT_DIALOG_DATA) public dataToBeEdited: Edit,
-    private _idb: IndexeddbService ) {
+    private idb: IndexedDbService ) {
       this.mode = 'add';
       this.states$ = this._dialog._usaStates();
       this.timezones$ = this._dialog._timezones();
@@ -104,19 +110,20 @@ export class DialogComponent {
 
   addLocation() {
     this.location.pools = this.pools;
-    let sData = {};
     if (this.mode === 'edit') {
       const mob = JSON.parse(this.deepCopy).mobilenumber;
-      sData = { mob, data: this.location };
-      this._idb.addToStore(sData).then(data => {
+      this.res.key = mob;
+      this.res.data = this.location;
+      this.idb.updateDB(this.res).then(data => {
         localStorage.setItem('c', '1');
         this.dialogRef.close();
       });
       return;
     }
     this.mode = 'add';
-    sData = { mob: this.location.mobilenumber, data: this.location };
-    this._idb.addToStore(sData).then(data => {
+    this.res.key = this.location.mobilenumber;
+    this.res.data = this.location;
+    this.idb.updateDB(this.res).then(data => {
       localStorage.setItem('c', '1');
       this.dialogRef.close();
     });

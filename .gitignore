@@ -8,6 +8,7 @@
 
 # dependencies
 /node_modules
+# /projects/indexed-db
 
 # profiling files
 chrome-profiler-events*.json

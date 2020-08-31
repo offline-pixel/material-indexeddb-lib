@@ -44,6 +44,9 @@ import { DialogService } from './dialog/dialog.service';
 import { MatTableComponent } from './mat-table/mat-table.component';
 import { SchedularComponent } from './schedular/schedular.component';
 
+import { IndexedDbService } from 'indexed-db';
+
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -53,7 +56,7 @@ import { SchedularComponent } from './schedular/schedular.component';
     SchedularComponent,
   ],
   imports: [
-    BrowserModule,
+    BrowserModule.withServerTransition({ appId: 'serverApp' }),
     AppRoutingModule,
     BrowserAnimationsModule,
     FormsModule,
@@ -62,7 +65,7 @@ import { SchedularComponent } from './schedular/schedular.component';
     ...modules
   ],
   // exports: [ ...modules ],
-  providers: [ DialogService ],
+  providers: [ DialogService, IndexedDbService ],
   entryComponents: [ DialogComponent, DeleteComponent, SchedularComponent ],
   bootstrap: [ AppComponent ]
 })

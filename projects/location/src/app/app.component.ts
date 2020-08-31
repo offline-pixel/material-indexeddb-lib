@@ -2,7 +2,7 @@ import { Component, OnInit, AfterContentChecked } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 
 import { DialogComponent } from './dialog/dialog.component';
-import { IndexeddbService } from './functions/indexeddb.service';
+import { IndexedDbService } from 'indexed-db';
 
 @Component({
   selector: 'loc-root',
@@ -13,10 +13,14 @@ import { IndexeddbService } from './functions/indexeddb.service';
 export class AppComponent implements OnInit, AfterContentChecked {
   title = 'QSS Technosoft | feature location';
   data: any;
+  res = {
+    name: 'dbName',
+    store: 'subDbName'
+  };
   constructor(
     private _pop: MatDialog,
-    private _idb: IndexeddbService ){
-      this._idb.createOrRetreive().then(data => {
+    private idb: IndexedDbService ){
+      this.idb.stream(this.res).then(data => {
         if ( data === undefined || data.length === 0 ) {
           this.data = null;
           return;
@@ -30,7 +34,7 @@ export class AppComponent implements OnInit, AfterContentChecked {
   ngAfterContentChecked() {
     if ( localStorage.getItem('c') === '1' ) {
       localStorage.removeItem('c');
-      this._idb.createOrRetreive().then(data => {
+      this.idb.stream(this.res).then(data => {
         localStorage.setItem('t', '1');
         if ( data === undefined || data.length === 0 ) {
           this.data = null;

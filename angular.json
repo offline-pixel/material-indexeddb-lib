@@ -17,7 +17,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "outputPath": "dist/location",
+            "outputPath": "dist/location/browser",
             "index": "projects/location/src/index.html",
             "main": "projects/location/src/main.ts",
             "polyfills": "projects/location/src/polyfills.ts",
@@ -122,6 +122,93 @@
             "production": {
               "devServerTarget": "location:serve:production"
             }
+          }
+        },
+        "server": {
+          "builder": "@angular-devkit/build-angular:server",
+          "options": {
+            "outputPath": "dist/location/server",
+            "main": "projects/location/server.ts",
+            "tsConfig": "projects/location/tsconfig.server.json"
+          },
+          "configurations": {
+            "production": {
+              "outputHashing": "media",
+              "fileReplacements": [
+                {
+                  "replace": "projects/location/src/environments/environment.ts",
+                  "with": "projects/location/src/environments/environment.prod.ts"
+                }
+              ],
+              "sourceMap": false,
+              "optimization": true
+            }
+          }
+        },
+        "serve-ssr": {
+          "builder": "@nguniversal/builders:ssr-dev-server",
+          "options": {
+            "browserTarget": "location:build",
+            "serverTarget": "location:server"
+          },
+          "configurations": {
+            "production": {
+              "browserTarget": "location:build:production",
+              "serverTarget": "location:server:production"
+            }
+          }
+        },
+        "prerender": {
+          "builder": "@nguniversal/builders:prerender",
+          "options": {
+            "browserTarget": "location:build:production",
+            "serverTarget": "location:server:production",
+            "routes": [
+              "/"
+            ]
+          },
+          "configurations": {
+            "production": {}
+          }
+        }
+      }
+    },
+    "indexedDb": {
+      "projectType": "library",
+      "root": "projects/indexed-db",
+      "sourceRoot": "projects/indexed-db/src",
+      "prefix": "idb-lib",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-ng-packagr:build",
+          "options": {
+            "tsConfig": "projects/indexed-db/tsconfig.lib.json",
+            "project": "projects/indexed-db/ng-package.json"
+          },
+          "configurations": {
+            "production": {
+              "tsConfig": "projects/indexed-db/tsconfig.lib.prod.json"
+            }
+          }
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "main": "projects/indexed-db/src/test.ts",
+            "tsConfig": "projects/indexed-db/tsconfig.spec.json",
+            "karmaConfig": "projects/indexed-db/karma.conf.js"
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "projects/indexed-db/tsconfig.lib.json",
+              "projects/indexed-db/tsconfig.spec.json"
+            ],
+            "exclude": [
+              "**/node_modules/**"
+            ]
           }
         }
       }
